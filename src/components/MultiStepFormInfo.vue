@@ -60,7 +60,7 @@ const form = reactive<IFormState>({
 const rules: Record<string, Rule[]> = {
   name: [
     {
-      required: true,
+      required: form.name ? true : false,
       type: 'string',
       pattern: /^[^0-9][a-zA-Z- ]{2,}$/i,
       transform(value) {
@@ -72,7 +72,7 @@ const rules: Record<string, Rule[]> = {
   ],
   email: [
     {
-      required: true,
+      required: form.name ? true : false,
       type: 'email',
       message: 'Email is required',
       trigger: 'change',
@@ -80,7 +80,7 @@ const rules: Record<string, Rule[]> = {
   ],
   phone: [
     {
-      required: true,
+      required: form.name ? true : false,
       type: 'string',
       pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/,
       transform(value) {
