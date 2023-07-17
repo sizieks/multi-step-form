@@ -66,7 +66,7 @@ const rules: Record<string, Rule[]> = {
       transform(value) {
         return value.trim();
       },
-      message: 'Name is required',
+      message: 'Invalid name',
       trigger: 'change',
     },
   ],
@@ -74,7 +74,7 @@ const rules: Record<string, Rule[]> = {
     {
       required: form.name ? true : false,
       type: 'email',
-      message: 'Email is required',
+      message: 'Invalid email',
       trigger: 'change',
     },
   ],
@@ -86,7 +86,7 @@ const rules: Record<string, Rule[]> = {
       transform(value) {
         return value.trim();
       },
-      message: 'Phone is required',
+      message: 'Invalid phone number',
       trigger: 'change',
     },
   ],
