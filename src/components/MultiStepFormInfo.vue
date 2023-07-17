@@ -29,7 +29,7 @@
               allowClear
               size="large"
               v-model:value="form.email"
-              placeholder="e.g. johndoe@lorem.com"
+              placeholder="e.g. jd@lorem.ipsum"
             />
           </a-form-item>
           <a-form-item label="Phone Number" name="phone">
