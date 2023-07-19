@@ -47,7 +47,7 @@ describe('multi-step form', () => {
     cy.get('#form_item_phone')
       .type(user.phone)
       .should('have.value', user.phone);
-    cy.contains('Name is required');
+    cy.contains('Invalid name');
     cy.contains('Forward').should('be.disabled');
     cy.get('#form_item_name ~ span [role="button"]')
       .click()
