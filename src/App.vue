@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { theme } from './theme'
+import { theme } from './theme';
 import MultiStepForm from './components/MultiStepForm.vue';
 </script>
 

@@ -1,4 +1,4 @@
-import { ThemeConfig } from "ant-design-vue/es/config-provider/context";
+import { ThemeConfig } from 'ant-design-vue/es/config-provider/context';
 
 export const theme: ThemeConfig = {
   token: {
