@@ -74,17 +74,6 @@ const steps: IStep[] = [
   { title: 'Step 4', description: 'Summary' },
 ];
 
-// ts не может самостоятельновычислить тип, получаем any для
-// calculateTotal, acc, addon, form, plan
-const calculateTotal = computed((): number => {
-  // time frame, period
-  const period = form.billing === 'yearly' ? 'yearly' : 'monthly';
-
-  return form.addons.reduce((acc, addon) => {
-    return (acc += hashTableAddons[addon].price[period]);
-  }, hashTablePlans[form.plan].price[period]);
-});
-
 const form = reactive<IForm>({
   addons: [],
   billing: billing,
@@ -93,13 +82,11 @@ const form = reactive<IForm>({
   name: '',
   phone: '',
   plan: plans[0].id,
-  // использование функции вместо вычисляемого свойства ломает приложение
-  // обращение к ключу value вычисляемого своства ломает приложение
-  total: calculateTotal,
+  total: 0,
 });
 
 const isDisabled = computed(() => {
-  return !Boolean(form.name && form.email && form.phone)
+  return !Boolean(form.name && form.email && form.phone);
 });
 
 const confirm = () => {
@@ -158,11 +145,6 @@ const hashTableAddons = addons.reduce((hashTable, addon) => {
   return { ...hashTable, [addon.id]: addon };
 }, {} as Record<IAddon['id'], IAddon>);
 
-// мб считать сумму через эффект?
-watchEffect(() => {
-  console.log(form.addons);
-});
-
 const selectedAddons = computed(() => {
   return form.addons.reduce((acc, addon) => {
     return [...acc, hashTableAddons[addon]];
@@ -170,6 +152,15 @@ const selectedAddons = computed(() => {
 });
 
 const selectedPlan = computed(() => hashTablePlans[form.plan]);
+
+watchEffect(() => {
+  // рабочая бредятина, одурачившая ts :D, переписать!
+  const period = form.billing === 'yearly' ? 'yearly' : 'monthly';
+
+  form.total = form.addons.reduce((acc, addon) => {
+    return (acc += hashTableAddons[addon].price[period]);
+  }, hashTablePlans[form.plan].price[period]);
+});
 
 /*
 const calculateTotal = computed((): number => {
