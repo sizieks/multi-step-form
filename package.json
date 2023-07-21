@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ant-design-vue": "^4.0.0-rc.5",
+    "ant-design-vue": "^4.0.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {
