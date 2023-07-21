@@ -1,35 +1,11 @@
 <template>
-  <a-config-provider
-    :theme="{
-      token: {
-        colorPrimary: '#483eff',
-        colorError: '#f9818e',
-        colorLink: '#483eff',
-        fontFamily: 'Ubuntu',
-        fontSize: 16,
-      },
-      components: {
-        Steps: {
-          colorFillContent: '#ffffff',
-          colorSplit: '#ffffff',
-          colorPrimary: '#ffaf7e',
-          colorText: '#ffffff',
-          colorTextDescription: '#ffffff',
-          colorTextLabel: '#483eff',
-          controlItemBgActive: '#ffffff',
-        },
-        Card: {
-          fontSizeLG: 32,
-          fontWeightStrong: 700,
-        },
-      },
-    }"
-  >
+  <a-config-provider :theme="theme">
     <MultiStepForm />
   </a-config-provider>
 </template>
 
 <script setup lang="ts">
+import { theme } from './theme'
 import MultiStepForm from './components/MultiStepForm.vue';
 </script>
 
