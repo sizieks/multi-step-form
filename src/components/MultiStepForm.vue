@@ -99,7 +99,7 @@ const form = reactive<IForm>({
 });
 
 const isDisabled = computed(() => {
-  return form.name && form.email && form.phone ? false : true;
+  return !Boolean(form.name && form.email && form.phone)
 });
 
 const confirm = () => {
