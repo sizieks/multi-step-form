@@ -146,7 +146,7 @@ const hashTableAddons = addons.reduce((hashTable, addon) => {
 }, {} as Record<IAddon['id'], IAddon>);
 
 const selectedAddons = computed(() => {
-  return form.addons.reduce((acc, addon) => {
+  return [...form.addons].sort().reduce((acc, addon) => {
     return [...acc, hashTableAddons[addon]];
   }, [] as IAddon[]);
 });
