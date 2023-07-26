@@ -15,7 +15,6 @@
             <MultiStepFormPlan
               v-show="step === 1"
               :billing="form.billing"
-              :currency="currency"
               :plan="form.plan"
               :plans="plans"
               @update:billing="handleForm"
@@ -25,16 +24,14 @@
               v-show="step === 2"
               :addons="addons"
               :billing="form.billing"
-              :currency="currency"
               @update:addons="handleForm"
             />
             <MultiStepFormSummary
               v-show="step === 3"
               :addons="selectedAddons"
               :billing="form.billing"
-              :currency="currency"
               :plan="selectedPlan"
-              :total="form.total"
+              :total="response.currency + form.total"
               @change:plan="step = 1"
             />
             <MultiStepFormConfirm v-show="step === 4" />
@@ -65,8 +62,8 @@ import MultiStepFormPlan from './MultiStepFormPlan.vue';
 import MultiStepFormSidebar from './MultiStepFormSidebar.vue';
 import MultiStepFormSummary from './MultiStepFormSummary.vue';
 
-const { addons, billing, currency, plans } = response;
 const step = ref<number>(0);
+
 const steps: IStep[] = [
   { title: 'Step 1', description: 'Info' },
   { title: 'Step 2', description: 'Plan' },
@@ -74,10 +71,38 @@ const steps: IStep[] = [
   { title: 'Step 4', description: 'Summary' },
 ];
 
+const addons: IAddon[] = response.addons.map((addon) => ({
+  ...addon,
+  price: {
+    monthly: {
+      decorated: `+${response.currency}${addon.price.monthly}`,
+      plain: addon.price.monthly,
+    },
+    yearly: {
+      decorated: `+${response.currency}${addon.price.yearly}`,
+      plain: addon.price.yearly,
+    },
+  },
+}));
+
+const plans: IPlan[] = response.plans.map((plan) => ({
+  ...plan,
+  price: {
+    monthly: {
+      decorated: `${response.currency}${plan.price.monthly}`,
+      plain: plan.price.monthly,
+    },
+    yearly: {
+      decorated: `${response.currency}${plan.price.yearly}`,
+      plain: plan.price.yearly,
+    },
+  },
+}));
+
 const form = reactive<IForm>({
   addons: [],
-  billing: billing,
-  currency: currency,
+  billing: response.billing,
+  currency: response.currency,
   email: '',
   name: '',
   phone: '',
@@ -102,117 +127,25 @@ const handleForm = <T extends keyof IForm>(key: T, value: IForm[T]): void => {
   form[key] = value;
 };
 
-/*
-you dumb fuck, what's wrong with you, ts?
-дальнейшее обращение вида genericHashTablePlans[form.plan].price ts воспринимает
-в штыки (нужно, например, для calculateTotal)
-const genericHashTablePlans = computed(() => {
-  return plans.reduce((hashTable, plan) => {
-    return {
-      ...hashTable,
-      [plan.id]: {
-        ...plan,
-        price:
-          form.billing === 'monthly'
-            ? `$${plan.price.monthly}/mo`
-            : `$${plan.price.yearly}/yr`,
-      },
-    };
-  }, {} as Record<IPlan['id'], IPlan<string>>);
-});
-
-const genericHashTableAddons = computed(() => {
-  return addons.reduce((hashTable, addon) => {
-    return {
-      ...hashTable,
-      [addon.id]: {
-        ...addon,
-        price:
-          form.billing === 'monthly'
-            ? `$${addon.price.monthly}/mo`
-            : `$${addon.price.yearly}/yr`,
-      },
-    };
-  }, {} as Record<IAddon['id'], IAddon<string>>);
-});
-*/
+const hashTableAddons = addons.reduce((hashTable, addon) => {
+  return { ...hashTable, [addon.id]: addon };
+}, {} as Record<IAddon['id'], IAddon>);
 
 const hashTablePlans = plans.reduce((hashTable, plan) => {
   return { ...hashTable, [plan.id]: plan };
 }, {} as Record<IPlan['id'], IPlan>);
 
-const hashTableAddons = addons.reduce((hashTable, addon) => {
-  return { ...hashTable, [addon.id]: addon };
-}, {} as Record<IAddon['id'], IAddon>);
-
-const selectedAddons = computed(() => {
-  return [...form.addons].sort().reduce((acc, addon) => {
-    return [...acc, hashTableAddons[addon]];
-  }, [] as IAddon[]);
-});
+const selectedAddons = computed(() =>
+  [...form.addons].sort().map((addon) => hashTableAddons[addon])
+);
 
 const selectedPlan = computed(() => hashTablePlans[form.plan]);
 
 watchEffect(() => {
-  // рабочая бредятина, одурачившая ts :D, переписать!
-  const period = form.billing === 'yearly' ? 'yearly' : 'monthly';
-
   form.total = form.addons.reduce((acc, addon) => {
-    return (acc += hashTableAddons[addon].price[period]);
-  }, hashTablePlans[form.plan].price[period]);
+    return (acc += hashTableAddons[addon].price[form.billing].plain);
+  }, hashTablePlans[form.plan].price[form.billing].plain);
 });
-
-/*
-const calculateTotal = computed((): number => {
-  const total = form.addons.reduce((acc, addon) => {
-    return (acc += hashTableAddons[addon].price);
-  }, hashTablePlans[form.plan].price);
-
-  return form.billing === 'yearly' ? total * multiplier : total;
-});
-
-const calculateTotal = (): number => {
-  const total = form.addons.reduce((acc, addon) => {
-    return (acc += hashTableAddons[addon].price);
-  }, hashTablePlans[form.plan].price);
-
-  return form.billing === 'yearly' ? total * multiplier : total;
-};
-
-const normalizedAddons = computed(() => {
-  return addons
-    .filter((addon) => form.addons.includes(addon.id))
-    .map((addon) => ({
-      ...addon,
-      price: `+${
-        currency + (form.billing === 'monthly' ? addon.price : addon.price * 10)
-      }`,
-    }));
-});
-
-const normalizedAddonsWithHash = computed(() => {
-  return selectedAddons.value.map((addon) => {
-    return {
-      ...addon,
-      price: `${
-        currency +
-        (form.billing === 'yearly' ? addon.price * multiplier : addon.price)
-      }`,
-    };
-  });
-});
-
-const addonsWithGetter = addons.map((addon) => {
-  return {
-    ...addon,
-    get price() {
-      return `+${
-        currency + (form.billing === 'monthly' ? addon.price : addon.price * 10)
-      }`;
-    },
-  };
-});
-*/
 </script>
 
 <style scoped>

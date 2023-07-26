@@ -38,7 +38,7 @@
                   </a-row>
                   <a-row>
                     <a-col class="gray">
-                      {{ getPrice(billing, currency, plan) }}
+                      {{ plan.price[billing].decorated }}
                     </a-col>
                   </a-row>
                   <a-row>
@@ -80,21 +80,12 @@ import { IPlan } from '../types';
 
 const props = defineProps<{
   billing: string;
-  currency: string;
   plan: number;
   plans: IPlan[];
 }>();
 
 const value = ref<number>(props.plan);
 const checked = ref<string>(props.billing);
-
-// из-за того, что не смог побороть ts, вынужден повторятся в трёх компонентах
-// и прокидывать избыточное количество свойств, хотя и здесь можно было
-// выкрутиться, вынесев код в composables
-const getPrice = (billing: string, currency: string, obj: IPlan) => {
-  const price = billing === 'monthly' ? obj.price.monthly : obj.price.yearly;
-  return currency + price;
-};
 </script>
 
 <style scoped>

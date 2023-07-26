@@ -18,25 +18,28 @@ export interface IStep {
 }
 
 export interface IPrice {
-  monthly: number;
-  yearly: number;
+  decorated: string;
+  plain: number;
 }
 
-export interface IPlan<T = IPrice> {
-  id: number;
-  icon: string;
-  label: string;
-  // price: { monthly: number; yearly: number; }
-  price: T;
+export interface IPeriod<T = IPrice> {
+  [key: string]: T;
 }
 
-export interface IAddon<T = IPrice> extends Omit<IPlan<T>, 'icon'> {
+export interface IAddon<T = IPrice> {
   description: string;
+  id: number;
+  label: string;
+  price: IPeriod<T>;
+}
+
+export interface IPlan<T = IPrice> extends Omit<IAddon<T>, 'description'> {
+  icon: string;
 }
 
 export interface IResponse {
-  addons: IAddon[];
+  addons: IAddon<number>[];
   billing: string;
   currency: string;
-  plans: IPlan[];
+  plans: IPlan<number>[];
 }

@@ -19,10 +19,10 @@
             <a-row align="space-between">
               <a-col class="font-medium">
                 {{ plan.label }}
-                ({{ billing.charAt(0).toUpperCase() + billing.slice(1) }})
+                ({{ period }})
               </a-col>
               <a-col class="font-medium">
-                {{ getPrice(billing, currency, plan) }}
+                {{ plan.price[billing].decorated }}
               </a-col>
             </a-row>
             <a-row>
@@ -41,14 +41,14 @@
             <a-list-item>
               <a-list-item-meta :description="addon.label" />
               <template #extra>
-                +{{ getPrice(billing, currency, addon) }}
+                {{ addon.price[billing].decorated }}
               </template>
             </a-list-item>
           </template>
           <template #footer>
             <a-row align="space-between">
               <a-col>Total (per {{ billing.slice(0, -2) }})</a-col>
-              <a-col class="indigo font-medium">{{ currency + total }}</a-col>
+              <a-col class="indigo font-medium">{{ total }}</a-col>
             </a-row>
           </template>
         </a-list>
@@ -58,23 +58,19 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { IAddon, IPlan } from '../types';
 
-defineProps<{
+const props = defineProps<{
   addons: IAddon[];
   billing: string;
-  currency: string;
   plan: IPlan;
-  total: number;
+  total: string;
 }>();
 
-// из-за того, что не смог побороть ts, вынужден повторятся в трёх компонентах
-// и прокидывать избыточное количество свойств, хотя и здесь можно было
-// выкрутиться, вынесев код в composables
-const getPrice = (billing: string, currency: string, obj: IPlan | IAddon) => {
-  const price = billing === 'monthly' ? obj.price.monthly : obj.price.yearly;
-  return currency + price;
-};
+const period = computed(() => {
+  return props.billing.charAt(0).toUpperCase() + props.billing.slice(1);
+});
 </script>
 
 <style scoped>
