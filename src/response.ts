@@ -1,6 +1,6 @@
 import { IResponse } from './types';
 
-export const response = <IResponse>{
+export const response: IResponse = {
   addons: [
     {
       description: 'Access to multiplayer games',

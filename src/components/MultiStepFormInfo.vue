@@ -74,6 +74,9 @@ const rules: Record<string, Rule[]> = {
     {
       required: form.name ? true : false,
       type: 'email',
+      transform(value) {
+        return value.trim();
+      },
       message: 'Invalid email',
       trigger: 'change',
     },
@@ -96,14 +99,8 @@ const emit = defineEmits<{
   'update:form': [key: T, value: IFormState[T]];
 }>();
 
-const updateForm = (
-  name: T,
-  status: boolean
-  // errorMsgs: string | null
-) => {
-  status
-    ? emit('update:form', name, form[name])
-    : emit('update:form', name, '');
+const updateForm = (name: T, status: boolean) => {
+  emit('update:form', name, status ? form[name] : '');
 };
 </script>
 

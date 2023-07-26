@@ -39,7 +39,7 @@
                         </a-row>
                       </a-col>
                       <a-col class="ml-auto indigo">
-                        +{{ getPrice(billing, currency, addon) }}
+                        {{ addon.price[billing].decorated }}
                       </a-col>
                     </a-row>
                   </a-card>
@@ -60,18 +60,9 @@ import { IAddon } from '../types';
 defineProps<{
   addons: IAddon[];
   billing: string;
-  currency: string;
 }>();
 
 const value = ref<number[]>([]);
-
-// из-за того, что не смог побороть ts, вынужден повторятся в трёх компонентах
-// и прокидывать избыточное количество свойств, хотя и здесь можно было
-// выкрутиться, вынесев код в composables
-const getPrice = (billing: string, currency: string, obj: IAddon) => {
-  const price = billing === 'monthly' ? obj.price.monthly : obj.price.yearly;
-  return currency + price;
-};
 </script>
 
 <style scoped>
