@@ -3,6 +3,7 @@
   font-weight: 700;
   font-style: bold;
   src: url(./assets/fonts/Ubuntu-Bold.ttf) format('truetype');
+  font-display: block;
 }
 
 @font-face {
@@ -10,6 +11,7 @@
   font-weight: 500;
   font-style: normal;
   src: url(./assets/fonts/Ubuntu-Medium.ttf) format('truetype');
+  font-display: block;
 }
 
 @font-face {
@@ -17,6 +19,7 @@
   font-weight: 400;
   font-style: normal;
   src: url(./assets/fonts/Ubuntu-Regular.ttf) format('truetype');
+  font-display: block;
 }
 
 body {
