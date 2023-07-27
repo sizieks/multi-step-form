@@ -1,6 +1,15 @@
 <template>
   <a-config-provider :theme="theme">
-    <MultiStepForm />
+    <Suspense>
+      <MultiStepForm />
+      <!--
+        <template #fallback>
+          may have to redesign the structure and
+          separate out a layout component >_<
+          but too lazy for now...
+        </template>
+      -->
+    </Suspense>
   </a-config-provider>
 </template>
 

@@ -52,8 +52,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref, watchEffect } from 'vue';
-import { IAddon, IForm, IPlan, IStep } from '../types';
-import { response } from '../response';
+import { IAddon, IForm, IPlan, IResponse, IStep } from '../types';
 import MultiStepFormAddons from './MultiStepFormAddons.vue';
 import MultiStepFormConfirm from './MultiStepFormConfirm.vue';
 import MultiStepFormControls from './MultiStepFormControls.vue';
@@ -61,6 +60,17 @@ import MultiStepFormInfo from './MultiStepFormInfo.vue';
 import MultiStepFormPlan from './MultiStepFormPlan.vue';
 import MultiStepFormSidebar from './MultiStepFormSidebar.vue';
 import MultiStepFormSummary from './MultiStepFormSummary.vue';
+
+const makeRequest = async (): Promise<IResponse> => {
+  const { response } = await import('../response');
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(response);
+    }, 500);
+  });
+};
+
+const response = await makeRequest();
 
 const step = ref<number>(0);
 
