@@ -32,7 +32,7 @@ body {
 }
 
 #app {
-  min-height: 37.5rem;
-  min-width: 58.75rem;
+  height: 37.5rem;
+  width: 58.75rem;
   margin: auto;
 }
