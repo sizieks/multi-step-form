@@ -164,7 +164,6 @@ watchEffect(() => {
 }
 
 .sidebar {
-  /* height: 568px; */
   width: 274px;
   margin-right: 24px;
   background-image: url(../assets/images/bg-sidebar-desktop.svg);

@@ -4,9 +4,8 @@
       <MultiStepForm />
       <!--
         <template #fallback>
-          may have to redesign the structure and
-          separate out a layout component >_<
-          but too lazy for now...
+          may have to redesign the structure and separate
+          out a layout component >_< but too lazy for now...
         </template>
       -->
     </Suspense>
