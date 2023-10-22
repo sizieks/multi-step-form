@@ -1,4 +1,7 @@
 import { IResponse } from './types';
+import advanced from './assets/images/icon-advanced.svg';
+import arcade from './assets/images/icon-arcade.svg';
+import pro from './assets/images/icon-pro.svg';
 
 export const response: IResponse = {
   addons: [
@@ -26,19 +29,19 @@ export const response: IResponse = {
   plans: [
     {
       id: 1,
-      icon: '/src/assets/images/icon-arcade.svg',
+      icon: arcade,
       label: 'Arcade',
       price: { monthly: 9, yearly: 90 },
     },
     {
       id: 2,
-      icon: '/src/assets/images/icon-advanced.svg',
+      icon: advanced,
       label: 'Advanced',
       price: { monthly: 12, yearly: 120 },
     },
     {
       id: 3,
-      icon: '/src/assets/images/icon-pro.svg',
+      icon: pro,
       label: 'Pro',
       price: { monthly: 15, yearly: 150 },
     },
