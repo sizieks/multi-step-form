@@ -5,7 +5,7 @@ const user = {
 };
 
 const expectStepsVisibility = (step) => {
-  const array = [
+  const steps = [
     'Personal info',
     'Select your plan',
     'Pick add-ons',
@@ -13,7 +13,7 @@ const expectStepsVisibility = (step) => {
     'Thank you!',
   ];
 
-  array.forEach((item, index) => {
+  steps.forEach((item, index) => {
     cy.contains(item).should(index === step ? 'be.visible' : 'not.be.visible');
   });
 };
