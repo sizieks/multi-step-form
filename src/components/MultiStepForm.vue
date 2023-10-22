@@ -4,15 +4,18 @@
       <a-col flex="none" class="h-35.5 sidebar mr-24">
         <a-row>
           <a-col class="pt-3 pl-3 font-medium">
-            <MultiStepFormSidebar :steps="steps" :current="step" />
+            <multi-step-form-sidebar :steps="steps" :current="step" />
           </a-col>
         </a-row>
       </a-col>
       <a-col flex="auto">
         <a-row class="h-full">
           <a-col class="flex flex-col justify-between" :span="24">
-            <MultiStepFormInfo v-show="step === 0" @update:form="handleForm" />
-            <MultiStepFormPlan
+            <multi-step-form-info
+              v-show="step === 0"
+              @update:form="handleForm"
+            />
+            <multi-step-form-plan
               v-show="step === 1"
               :billing="form.billing"
               :plan="form.plan"
@@ -20,13 +23,13 @@
               @update:billing="handleForm"
               @update:plan="handleForm"
             />
-            <MultiStepFormAddons
+            <multi-step-form-addons
               v-show="step === 2"
               :addons="addons"
               :billing="form.billing"
               @update:addons="handleForm"
             />
-            <MultiStepFormSummary
+            <multi-step-form-summary
               v-show="step === 3"
               :addons="selectedAddons"
               :billing="form.billing"
@@ -34,8 +37,8 @@
               :total="response.currency + form.total"
               @change:plan="step = 1"
             />
-            <MultiStepFormConfirm v-show="step === 4" />
-            <MultiStepFormControls
+            <multi-step-form-confirm v-show="step === 4" />
+            <multi-step-form-controls
               v-show="step !== 4"
               :step="step"
               :disabled="isDisabled"

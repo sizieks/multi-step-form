@@ -8,7 +8,6 @@
     />
     <a-row>
       <a-col :span="24">
-        <!-- нужно как-то сослаться на locale и убрать padding -->
         <a-list
           :locale="{ emptyText: '' }"
           :data-source="addons"
