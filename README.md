@@ -1,18 +1,41 @@
-# Vue 3 + TypeScript + Vite
+# Multi Step Form
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## See it in action
 
-## Recommended IDE Setup
+<https://sizieks.github.io/multi-step-form/>
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Built with
 
-## Type Support For `.vue` Imports in TS
+- Ant Design,
+- Cypress (e2e),
+- TypeScript,
+- Vite,
+- Vue 3 (Composition API).
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Screenshots
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+Desktop @ 1440px
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+### Step 1
+
+![step-1](https://github.com/sizieks/multi-step-form/assets/2656072/8af9f40c-3f47-40eb-9674-856bb842d7f3)
+
+#### Error validation
+
+![step-1-error-validation](https://github.com/sizieks/multi-step-form/assets/2656072/bd0ed997-831e-4cf2-bebf-b6ad12c98e6e)
+
+### Step 2
+
+![step-2](https://github.com/sizieks/multi-step-form/assets/2656072/38038d04-30ac-4dbd-a141-5233c3cc3097)
+
+### Step 3
+
+![step-3](https://github.com/sizieks/multi-step-form/assets/2656072/bc3ede96-170c-4557-a995-943cda5db89e)
+
+### Step 4
+
+![step-4](https://github.com/sizieks/multi-step-form/assets/2656072/7228f40a-851b-4ef3-abca-a39532f02a83)
+
+### Confirmation
+
+![confirmation](https://github.com/sizieks/multi-step-form/assets/2656072/0a1f3e76-a316-465f-83e1-ec97de918d15)
